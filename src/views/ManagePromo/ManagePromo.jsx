@@ -39,16 +39,16 @@ const styles = {
   }
 };
 
-function TableList(props) {
+function ManagePromo(props) {
   const { classes } = props;
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Manage Promo</h4>
+            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
             <p className={classes.cardCategoryWhite}>
-              Manage Promo
+              Here is a subtitle for this table
             </p>
           </CardHeader>
           <CardBody>
@@ -109,4 +109,4 @@ function TableList(props) {
   );
 }
 
-export default withStyles(styles)(TableList);
+export default withStyles(styles)(ManagePromo);
