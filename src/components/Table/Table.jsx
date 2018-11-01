@@ -12,17 +12,24 @@ import tableStyle from "assets/jss/material-dashboard-react/components/tableStyl
 
 function CustomTable({ ...props }) {
   const { classes, tableHead, tableData, tableHeaderColor } = props;
+  const keyNo = 1;
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
         {tableHead !== undefined ? (
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
+              <TableCell
+                    className={classes.tableCell + " " + classes.tableHeadCell}
+                    key={keyNo}
+                  >
+                    No
+              </TableCell>  
               {tableHead.map((prop, key) => {
                 return (
                   <TableCell
                     className={classes.tableCell + " " + classes.tableHeadCell}
-                    key={key}
+                    key={key+1}
                   >
                     {prop}
                   </TableCell>
@@ -35,9 +42,12 @@ function CustomTable({ ...props }) {
           {tableData.map((prop, key) => {
             return (
               <TableRow key={key}>
+                <TableCell className={classes.tableCell} key={keyNo}>
+                      {key+1}
+                  </TableCell>
                 {prop.map((prop, key) => {
                   return (
-                    <TableCell className={classes.tableCell} key={key}>
+                    <TableCell className={classes.tableCell} key={key+2}>
                       {prop}
                     </TableCell>
                   );
