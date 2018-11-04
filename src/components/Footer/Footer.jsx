@@ -38,7 +38,7 @@ function Footer({ ...props }) {
         </div>
         <p className={classes.right}>
           <span>
-            &copy; {1900 + new Date().getYear()}{" "}
+            &copy; {1900 + new Date().getYear()}
             Qitma, Template by Creative Team
           </span>
         </p>

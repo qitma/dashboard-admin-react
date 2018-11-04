@@ -11,7 +11,7 @@ import TableCell from "@material-ui/core/TableCell";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 
 function CustomTable({ ...props }) {
-  const { classes, tableHead, tableData, tableHeaderColor } = props;
+  const { classes, tableHead, tableData, tableHeaderColor, cellAction } = props;
   const keyNo = 1;
   return (
     <div className={classes.tableResponsive}>
@@ -20,16 +20,16 @@ function CustomTable({ ...props }) {
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
               <TableCell
-                    className={classes.tableCell + " " + classes.tableHeadCell}
-                    key={keyNo}
-                  >
-                    No
-              </TableCell>  
-              {tableHead.map((prop, key) => {
+                className={classes.tableCell + " " + classes.tableHeadCell}
+                key={keyNo}
+              >
+                No
+              </TableCell>
+              {tableHead.map((prop, index) => {
                 return (
                   <TableCell
                     className={classes.tableCell + " " + classes.tableHeadCell}
-                    key={key+1}
+                    key={index + 1}
                   >
                     {prop}
                   </TableCell>
@@ -41,22 +41,36 @@ function CustomTable({ ...props }) {
         <TableBody>
           {tableData.map((prop, key) => {
             return (
-              <TableRow key={key}>
+              <TableRow key={prop[`id`]}>
                 <TableCell className={classes.tableCell} key={keyNo}>
-                      {key+1}
-                  </TableCell>
-                {prop.map((prop, key) => {
-                  return (
-                    <TableCell className={classes.tableCell} key={key+2}>
-                      {prop}
-                    </TableCell>
-                  );
+                  {key + 1}
+                </TableCell>
+                {Object.keys(prop).map((key, index) => {
+                  if (key.toLowerCase() !== "id") {
+                    return (
+                      <TableCell className={classes.tableCell} key={index + 1}>
+                        {prop[key]}
+                      </TableCell>
+                    );
+                  }
+                  return null;
                 })}
+                {cellAction && (
+                  <TableCell
+                    className={classes.tableCell}
+                    key={Object.keys(prop).length}
+                  >
+                    {cellAction}
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
+      {/* <div>
+        <pre>{JSON.stringify(tableData)}</pre>
+      </div> */}
     </div>
   );
 }
@@ -77,7 +91,12 @@ CustomTable.propTypes = {
     "gray"
   ]),
   tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+  tableData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired
+    })
+  ),
+  cellAction: PropTypes.object
 };
 
 export default withStyles(tableStyle)(CustomTable);
