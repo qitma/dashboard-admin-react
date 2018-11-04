@@ -15,7 +15,8 @@ function Danger({ ...props }) {
 }
 
 Danger.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired
 };
 
 export default withStyles(typographyStyle)(Danger);
