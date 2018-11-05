@@ -7,9 +7,14 @@ import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Table from "components/Table/Table.jsx";
 import Card from "components/Card/Card.jsx";
+//import icons
+import Create from "@material-ui/icons/Create";
+import DeleteForever from "@material-ui/icons/DeleteForever";
 //import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CustomAction from "components/Action/CustomAction.jsx";
+import ModalUpdateUser from "./ModalUpdateUser";
+import CustomDialog from "../../components/CustomModal/ModalDialog";
 
 const styles = {
   cardCategoryWhite: {
@@ -38,6 +43,14 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  buttonPointer: {
+    padding: 5,
+    height: 100,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#EEEEEE"
+    }
   }
 };
 
@@ -63,13 +76,36 @@ class ManageUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      users: [],
+      showDeleteModal: false,
+      showUpdateModal: false
     };
+
+    this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.showUpdateModal = this.showUpdateModal.bind(this);
+    this.closeUpdateModal = this.closeUpdateModal.bind(this);
   }
 
   componentDidMount() {
     this.fetchDataUser();
   }
+
+  showDeleteModal = () => {
+    this.setState({ showDeleteModal: true });
+  };
+
+  closeDeleteModal = () => {
+    this.setState({ showDeleteModal: false });
+  };
+
+  showUpdateModal = () => {
+    this.setState({ showUpdateModal: true });
+  };
+
+  closeUpdateModal = () => {
+    this.setState({ showUpdateModal: false });
+  };
 
   fetchDataUser() {
     let users = JSON.parse(localStorage.getItem("Users"));
@@ -78,10 +114,50 @@ class ManageUser extends React.Component {
   }
 
   render() {
-    //const { classes } = this.props;
+    const { classes } = this.props;
     const header = ["Name", "PhoneNumber", "City", "Deposit", "Action"];
     const users = this.state.users;
-    const cellAction = <CustomAction />;
+    const deleteComponent = (
+      <CustomDialog
+        open={this.state.showDeleteModal}
+        handleClose={this.closeDeleteModal}
+        handleSuccess={this.closeDeleteModal}
+        size="sm"
+      >
+        Are you sure want to delete this data ?
+      </CustomDialog>
+    );
+    const updateComponent = (
+      <ModalUpdateUser
+        open={this.state.showUpdateModal}
+        handleClose={this.closeUpdateModal}
+        handleSuccess={this.closeUpdateModal}
+        size="sm"
+        title="Update data user"
+      >
+        {" "}
+      </ModalUpdateUser>
+    );
+    const cellAction = (
+      <CustomAction>
+        {updateComponent}
+        {deleteComponent}
+        <div style={{ display: "inline-block" }}>
+          <span
+            className={classes.buttonPointer}
+            onClick={this.showUpdateModal}
+          >
+            <Create />
+          </span>
+          <span
+            className={classes.buttonPointer}
+            onClick={this.showDeleteModal}
+          >
+            <DeleteForever />
+          </span>
+        </div>
+      </CustomAction>
+    );
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
