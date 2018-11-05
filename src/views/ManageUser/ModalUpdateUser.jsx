@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import RegularButton from "../../components/CustomButtons/Button";
 import { Divider } from "@material-ui/core";
 
+// eslint-disable-next-line no-unused-vars
 const styles = theme => ({
   container: {
     display: "flex",
@@ -23,17 +24,18 @@ class ModalUpdateUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      phoneNumber: [""],
-      city: "",
-      deposit: 0
+      user: this.props.data
     };
   }
 
-  handleChange = name => event => {
+  handleChange = event => {
     this.setState({
-      [name]: event.target.value
+      user: {
+        [event.target.name]: event.target.value
+      }
     });
+    // eslint-disable-next-line no-console
+    console.log(this.state.user);
   };
 
   render() {
@@ -58,9 +60,10 @@ class ModalUpdateUser extends React.Component {
               <TextField
                 id="standard-name"
                 label="Name"
+                name="name"
                 className={classes.textField}
-                value={this.state.name}
-                onChange={this.handleChange("name")}
+                value={this.state.user.name}
+                onChange={this.handleChange}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true
@@ -70,9 +73,10 @@ class ModalUpdateUser extends React.Component {
               <TextField
                 id="standard-phonenumber"
                 label="Phone Number"
+                name="phoneNumber"
                 className={classes.textField}
-                value={this.state.phonenumber}
-                onChange={this.handleChange("phonenumber")}
+                value={this.state.user.phoneNumber}
+                onChange={this.handleChange}
                 margin="normal"
                 inputProps={inputPropsPhone}
                 InputLabelProps={{
@@ -83,9 +87,10 @@ class ModalUpdateUser extends React.Component {
               <TextField
                 id="standard-city"
                 label="City"
+                name="city"
                 className={classes.textField}
-                value={this.state.city}
-                onChange={this.handleChange("city")}
+                value={this.state.user.city}
+                onChange={this.handleChange}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true
@@ -95,9 +100,10 @@ class ModalUpdateUser extends React.Component {
               <TextField
                 id="standard-deposit"
                 label="Deposit"
+                name="deposit"
                 className={classes.textField}
-                value={this.state.deposit}
-                onChange={this.handleChange("deposit")}
+                value={this.state.user.deposit}
+                onChange={this.handleChange}
                 margin="normal"
                 type="number"
                 InputLabelProps={{
@@ -131,7 +137,8 @@ ModalUpdateUser.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleSuccess: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ModalUpdateUser);

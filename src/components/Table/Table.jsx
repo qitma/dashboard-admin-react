@@ -11,7 +11,8 @@ import TableCell from "@material-ui/core/TableCell";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 
 function CustomTable({ ...props }) {
-  const { classes, tableHead, tableData, tableHeaderColor, cellAction } = props;
+  const { classes, tableHead, tableData, tableHeaderColor } = props;
+  const CellAction = props.cellAction;
   const keyNo = 1;
   return (
     <div className={classes.tableResponsive}>
@@ -55,14 +56,15 @@ function CustomTable({ ...props }) {
                   }
                   return null;
                 })}
-                {cellAction && (
+                {CellAction && (
                   <TableCell
                     className={classes.tableCell}
                     key={Object.keys(prop).length}
                   >
-                    {cellAction}
+                    {React.cloneElement(CellAction, { data: prop })}
                   </TableCell>
                 )}
+                {console.log(prop)}
               </TableRow>
             );
           })}
