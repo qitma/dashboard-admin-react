@@ -41,7 +41,7 @@ class ManageUser extends React.Component {
         city: "",
         deposit: ""
       },
-      isUpdate: true
+      isUpdate: true // for determine need re-render or not
     };
   }
 
@@ -88,6 +88,7 @@ class ManageUser extends React.Component {
     });
   };
 
+  //handleChange for modal in child.
   handleChange = (index, event) => {
     // eslint-disable-next-line no-console
     let target = event.target;
@@ -96,7 +97,7 @@ class ManageUser extends React.Component {
         ...prevState.user,
         [target.name]: target.value
       },
-      isUpdate: false
+      isUpdate: false // set update to false, for not re-render parent
     }));
   };
 
@@ -133,6 +134,7 @@ class ManageUser extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line no-console
     console.log("renderr");
     //const { classes } = this.props;
     const header = ["Name", "PhoneNumber", "City", "Deposit", "Action"];
