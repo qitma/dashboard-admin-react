@@ -21,25 +21,18 @@ const styles = theme => ({
 });
 
 class ModalUpdateUser extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: this.props.data
-    };
-  }
-
-  handleChange = event => {
-    this.setState({
-      user: {
-        [event.target.name]: event.target.value
-      }
-    });
-    // eslint-disable-next-line no-console
-    console.log(this.state.user);
-  };
-
   render() {
-    const { open, handleClose, handleSuccess, title, classes } = this.props;
+    const {
+      data,
+      open,
+      handleClose,
+      handleSuccess,
+      handleSubmit,
+      handleChange,
+      title,
+      size,
+      classes
+    } = this.props;
     const inputPropsPhone = {
       max: 14
     };
@@ -51,23 +44,24 @@ class ModalUpdateUser extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           disableBackdropClick
+          disableRestoreFocus={true}
         >
           <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
           <Divider />
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" />
-            <form className={classes.container} noValidate autoComplete="off">
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description" />
               <TextField
                 id="standard-name"
                 label="Name"
                 name="name"
                 className={classes.textField}
-                value={this.state.user.name}
-                onChange={this.handleChange}
+                defaultValue={data.name}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true
                 }}
+                onChange={e => handleChange(data.id, e)}
                 fullWidth
               />
               <TextField
@@ -75,13 +69,13 @@ class ModalUpdateUser extends React.Component {
                 label="Phone Number"
                 name="phoneNumber"
                 className={classes.textField}
-                value={this.state.user.phoneNumber}
-                onChange={this.handleChange}
+                defaultValue={data.phoneNumber}
                 margin="normal"
                 inputProps={inputPropsPhone}
                 InputLabelProps={{
                   shrink: true
                 }}
+                onChange={e => handleChange(data.id, e)}
                 fullWidth
               />
               <TextField
@@ -89,12 +83,12 @@ class ModalUpdateUser extends React.Component {
                 label="City"
                 name="city"
                 className={classes.textField}
-                value={this.state.user.city}
-                onChange={this.handleChange}
+                defaultValue={data.city}
                 margin="normal"
                 InputLabelProps={{
                   shrink: true
                 }}
+                onChange={e => handleChange(data.id, e)}
                 fullWidth
               />
               <TextField
@@ -102,30 +96,31 @@ class ModalUpdateUser extends React.Component {
                 label="Deposit"
                 name="deposit"
                 className={classes.textField}
-                value={this.state.user.deposit}
-                onChange={this.handleChange}
+                defaultValue={data.deposit}
                 margin="normal"
                 type="number"
                 InputLabelProps={{
                   shrink: true
                 }}
+                onChange={e => handleChange(data.id, e)}
                 fullWidth
               />
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <RegularButton onClick={handleClose} color="danger" size="sm">
-              CANCEL
-            </RegularButton>
-            <RegularButton
-              onClick={handleSuccess}
-              color="success"
-              size="sm"
-              autoFocus
-            >
-              OK
-            </RegularButton>
-          </DialogActions>
+            </DialogContent>
+            <DialogActions>
+              <RegularButton onClick={handleClose} color="danger" size="sm">
+                CANCEL
+              </RegularButton>
+              <RegularButton
+                onClick={handleSuccess}
+                color="success"
+                size="sm"
+                autoFocus
+                type="submit"
+              >
+                OK
+              </RegularButton>
+            </DialogActions>
+          </form>
         </Dialog>
       </div>
     );
@@ -137,8 +132,11 @@ ModalUpdateUser.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleSuccess: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  size: PropTypes.oneOf(["sm", "lg", "md"])
 };
 
 export default withStyles(styles)(ModalUpdateUser);

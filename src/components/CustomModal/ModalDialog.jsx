@@ -31,6 +31,7 @@ class CustomDialog extends React.Component {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        disableRestoreFocus={true}
       >
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
@@ -82,7 +83,7 @@ CustomDialog.defaultProps = {
 };
 
 CustomDialog.propTypes = {
-  size: PropTypes.oneOf(["sm", "lg"]),
+  size: PropTypes.oneOf(["sm", "lg", "md"]),
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleSuccess: PropTypes.func.isRequired,

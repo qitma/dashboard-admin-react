@@ -19,12 +19,7 @@ class UserActions extends React.Component {
       showDeleteModal: false,
       showUpdateModal: false
     };
-    this.showDeleteModal = this.showDeleteModal.bind(this);
-    this.closeDeleteModal = this.closeDeleteModal.bind(this);
-    this.showUpdateModal = this.showUpdateModal.bind(this);
-    this.closeUpdateModal = this.closeUpdateModal.bind(this);
   }
-
   showDeleteModal = () => {
     this.setState({ showDeleteModal: true });
   };
@@ -35,20 +30,29 @@ class UserActions extends React.Component {
 
   showUpdateModal = () => {
     this.setState({ showUpdateModal: true });
+    this.props.openModal(this.props.data);
   };
 
   closeUpdateModal = () => {
     this.setState({ showUpdateModal: false });
+    this.props.closeModal();
+  };
+  succesUpdateModal = () => {
+    this.setState({ showUpdateModal: false });
   };
 
+  successDeleteModal = () => {
+    this.setState({ showDeleteModal: false });
+    this.props.handleDelete(this.props.data.id);
+  };
   render() {
     // eslint-disable-next-line react/prop-types
-    const { data, classes } = this.props;
+    const { data, handleSubmit, handleChange, classes } = this.props;
     const deleteComponent = (
       <CustomDialog
         open={this.state.showDeleteModal}
         handleClose={this.closeDeleteModal}
-        handleSuccess={this.closeDeleteModal}
+        handleSuccess={this.successDeleteModal}
         size="sm"
       >
         Are you sure want to delete this data ?
@@ -58,13 +62,13 @@ class UserActions extends React.Component {
       <ModalUpdateUser
         open={this.state.showUpdateModal}
         handleClose={this.closeUpdateModal}
-        handleSuccess={this.closeUpdateModal}
+        handleSuccess={this.succesUpdateModal}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
         size="sm"
         title="Update data user"
         data={data}
-      >
-        {" "}
-      </ModalUpdateUser>
+      />
     );
     return (
       <div>
@@ -110,7 +114,13 @@ class UserActions extends React.Component {
 }
 
 UserActions.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  classes: PropTypes.any,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 };
 
 export default withStyles(tasksStyle)(UserActions);

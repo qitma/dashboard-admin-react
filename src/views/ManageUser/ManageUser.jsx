@@ -34,27 +34,119 @@ class ManageUser extends React.Component {
     super(props);
     this.state = {
       users: [],
-      showDeleteModal: false,
-      showUpdateModal: false
+      user: {
+        id: 0,
+        name: "",
+        phoneNumber: "",
+        city: "",
+        deposit: ""
+      },
+      isUpdate: true
     };
   }
 
   componentDidMount() {
     this.fetchDataUser();
+    // eslint-disable-next-line no-console
+    console.log("fetch did mount");
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!nextState.isUpdate) return false;
+    return true;
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    var users = this.getCopyUsers();
+    var user = { ...this.state.user };
+    if (this.state.user.id > 0) {
+      //console.log(users);
+      let _users = this.updateUsers(users, user);
+      this.postDataUser(_users);
+    } else {
+      user.id = users[users.length - 1].id + 1;
+      users.push(user);
+      this.postDataUser(users);
+    }
+    this.fetchDataUser(); //update state.isUpdate for force re-render
+  };
+
+  openModal = data => {
+    this.setState({ user: { ...data } });
+  };
+
+  closeModal = () => {
+    this.setState({
+      user: {
+        id: 0,
+        name: "",
+        phoneNumber: "",
+        city: "",
+        deposit: ""
+      }
+    });
+  };
+
+  handleChange = (index, event) => {
+    // eslint-disable-next-line no-console
+    let target = event.target;
+    this.setState(prevState => ({
+      user: {
+        ...prevState.user,
+        [target.name]: target.value
+      },
+      isUpdate: false
+    }));
+  };
+
+  postDataUser = users => {
+    localStorage.setItem("Users", JSON.stringify(users));
+  };
+
+  deleteDataUser = index => {
+    let users = this.getCopyUsers().filter(x => x.id !== index);
+    this.postDataUser(users);
+    this.fetchDataUser();
+  };
 
   fetchDataUser() {
     let users = JSON.parse(localStorage.getItem("Users"));
 
-    this.setState({ users });
+    this.setState({ users, isUpdate: true });
+  }
+
+  getCopyUsers() {
+    return this.state.users.slice();
+  }
+
+  updateUsers(users, newUser) {
+    //console.log(users);
+    let newUsers = users.map(x => {
+      if (x.id === newUser.id) {
+        x = { ...newUser };
+      }
+      return x;
+    });
+
+    return newUsers;
   }
 
   render() {
+    console.log("renderr");
     //const { classes } = this.props;
     const header = ["Name", "PhoneNumber", "City", "Deposit", "Action"];
     const users = this.state.users;
 
-    const cellAction = <UserActions />;
+    const cellAction = (
+      <UserActions
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        handleDelete={this.deleteDataUser}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+      />
+    );
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>

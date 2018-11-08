@@ -41,6 +41,8 @@ function CustomTable({ ...props }) {
         ) : null}
         <TableBody>
           {tableData.map((prop, key) => {
+            // eslint-disable-next-line no-console
+            //console.log(prop);
             return (
               <TableRow key={prop[`id`]}>
                 <TableCell className={classes.tableCell} key={keyNo}>
@@ -64,7 +66,6 @@ function CustomTable({ ...props }) {
                     {React.cloneElement(CellAction, { data: prop })}
                   </TableCell>
                 )}
-                {console.log(prop)}
               </TableRow>
             );
           })}
