@@ -10,25 +10,11 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 //custom
 import UserActions from "./UserActions.jsx";
+import SearchField from "../../components/Action/Search.jsx";
+import RegularButton from "../../components/CustomButtons/Button";
+import ModalUser from "./ModalUser";
+import Icon from "@material-ui/core/Icon";
 
-const dummyUser = [
-  {
-    id: 1,
-    name: "hendra",
-    phoneNumber: "082126153031",
-    city: "bandung",
-    deposit: 10000
-  },
-  {
-    id: 2,
-    name: "Qitma",
-    phoneNumber: "12323232",
-    city: "bandung",
-    deposit: 10000
-  }
-];
-
-localStorage.setItem("Users", JSON.stringify(dummyUser));
 class ManageUser extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +27,9 @@ class ManageUser extends React.Component {
         city: "",
         deposit: ""
       },
+      showCreateModal: false,
+      page: 0,
+
       isUpdate: true // for determine need re-render or not
     };
   }
@@ -60,6 +49,7 @@ class ManageUser extends React.Component {
     event.preventDefault();
     var users = this.getCopyUsers();
     var user = { ...this.state.user };
+    //console.log(user);
     if (this.state.user.id > 0) {
       //console.log(users);
       let _users = this.updateUsers(users, user);
@@ -88,6 +78,22 @@ class ManageUser extends React.Component {
     });
   };
 
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  showCreateModal = () => {
+    this.setState({ showCreateModal: true });
+  };
+
+  successCreateModal = () => {
+    this.setState({ showCreateModal: false });
+  };
+
+  closeCreateModal = () => {
+    this.setState({ showCreateModal: false });
+    this.closeModal();
+  };
   //handleChange for modal in child.
   handleChange = (index, event) => {
     // eslint-disable-next-line no-console
@@ -99,6 +105,7 @@ class ManageUser extends React.Component {
       },
       isUpdate: false // set update to false, for not re-render parent
     }));
+    console.log(this.state.user);
   };
 
   postDataUser = users => {
@@ -135,10 +142,22 @@ class ManageUser extends React.Component {
 
   render() {
     // eslint-disable-next-line no-console
-    console.log("renderr");
-    //const { classes } = this.props;
-    const header = ["Name", "PhoneNumber", "City", "Deposit", "Action"];
+    //console.log("renderr");
+    const { classes } = this.props;
+    const header = ["Name", "Phone Number", "City", "Deposit", "Action"];
     const users = this.state.users;
+    const createModal = (
+      <ModalUser
+        open={this.state.showCreateModal}
+        handleClose={this.closeCreateModal}
+        handleSuccess={this.successCreateModal}
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        data={this.state.user}
+        size="sm"
+        title="Add Data User"
+      />
+    );
 
     const cellAction = (
       <UserActions
@@ -149,8 +168,14 @@ class ManageUser extends React.Component {
         closeModal={this.closeModal}
       />
     );
+    const wrapperAdd = {
+      display: "flex",
+      justifyContent: "space-between"
+    };
+
     return (
       <GridContainer>
+        {createModal}
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             {/* <CardHeader color="primary">
@@ -160,11 +185,25 @@ class ManageUser extends React.Component {
               </p>
             </CardHeader> */}
             <CardBody>
+              <div style={wrapperAdd}>
+                <RegularButton
+                  onClick={this.showCreateModal}
+                  color="success"
+                  size="sm"
+                  autoFocus
+                  style={{ fontSize: "1em", textAlign: "left" }}
+                >
+                  <Icon>add</Icon> Add
+                </RegularButton>
+                <SearchField />
+              </div>
+
               <Table
                 tableHeaderColor="primary"
                 tableHead={header}
                 tableData={users}
                 cellAction={cellAction}
+                handleChangePage={this.handleChangePage}
               />
             </CardBody>
           </Card>

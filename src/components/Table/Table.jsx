@@ -7,15 +7,41 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
+import TableContent from "./TableContent.jsx";
+import TablePaginationActions from "./TablePaginationAction";
+const actionsStyles = theme => ({
+  root: {
+    flexShrink: 0,
+    color: theme.palette.text.secondary,
+    marginLeft: theme.spacing.unit * 2.5
+  }
+});
+
+const TablePaginationActionsWrapped = withStyles(actionsStyles, {
+  withTheme: true
+})(TablePaginationActions);
 
 function CustomTable({ ...props }) {
-  const { classes, tableHead, tableData, tableHeaderColor } = props;
-  const CellAction = props.cellAction;
+  const inlineStyle = {
+    marginTop: "10px"
+  };
+  const {
+    classes,
+    tableHead,
+    tableData,
+    tableHeaderColor,
+    tableKey,
+    cellAction,
+    handleChangePage
+  } = props;
   const keyNo = 1;
+  const colSpanFooter = tableHead.length + 1;
   return (
-    <div className={classes.tableResponsive}>
+    <div className={classes.tableResponsive} style={inlineStyle}>
       <Table className={classes.table}>
         {tableHead !== undefined ? (
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
@@ -40,36 +66,33 @@ function CustomTable({ ...props }) {
           </TableHead>
         ) : null}
         <TableBody>
-          {tableData.map((prop, key) => {
+          {tableData.map((data, key) => {
             // eslint-disable-next-line no-console
             //console.log(prop);
             return (
-              <TableRow key={prop[`id`]}>
-                <TableCell className={classes.tableCell} key={keyNo}>
-                  {key + 1}
-                </TableCell>
-                {Object.keys(prop).map((key, index) => {
-                  if (key.toLowerCase() !== "id") {
-                    return (
-                      <TableCell className={classes.tableCell} key={index + 1}>
-                        {prop[key]}
-                      </TableCell>
-                    );
-                  }
-                  return null;
-                })}
-                {CellAction && (
-                  <TableCell
-                    className={classes.tableCell}
-                    key={Object.keys(prop).length}
-                  >
-                    {React.cloneElement(CellAction, { data: prop })}
-                  </TableCell>
-                )}
-              </TableRow>
+              <TableContent
+                tableKey={tableKey}
+                data={data}
+                dataid={key}
+                cellAction={cellAction}
+                key={data[`id`]}
+              />
             );
           })}
         </TableBody>
+        <TableFooter className={classes.tableFooter}>
+          <TableRow>
+            <TablePagination
+              colSpan={colSpanFooter}
+              count={10}
+              rowsPerPage={3}
+              page={0}
+              onChangePage={handleChangePage}
+              //onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActionsWrapped}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
       {/* <div>
         <pre>{JSON.stringify(tableData)}</pre>
@@ -93,13 +116,15 @@ CustomTable.propTypes = {
     "rose",
     "gray"
   ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string),
+  tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
   tableData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired
     })
-  ),
-  cellAction: PropTypes.object
+  ).isRequired,
+  tableKey: PropTypes.arrayOf(PropTypes.string),
+  cellAction: PropTypes.object,
+  handleChangePage: PropTypes.func
 };
 
 export default withStyles(tableStyle)(CustomTable);

@@ -7,7 +7,7 @@ import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
 //import CardHeader from "components/Card/CardHeader.jsx";
 
-import ModalUpdateUser from "./ModalUpdateUser";
+import ModalUser from "./ModalUser";
 import CustomDialog from "../../components/CustomModal/ModalDialog";
 import tasksStyle from "assets/jss/material-dashboard-react/components/tasksStyle.jsx";
 import { withStyles } from "@material-ui/core";
@@ -59,7 +59,7 @@ class UserActions extends React.Component {
       </CustomDialog>
     );
     const updateComponent = (
-      <ModalUpdateUser
+      <ModalUser
         open={this.state.showUpdateModal}
         handleClose={this.closeUpdateModal}
         handleSuccess={this.succesUpdateModal}

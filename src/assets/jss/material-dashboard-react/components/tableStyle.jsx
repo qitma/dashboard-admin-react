@@ -49,12 +49,16 @@ const tableStyle = theme => ({
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle",
-    minWidth: "5em"
+    minWidth: "2em"
+    //textAlign: "center"
   },
   tableResponsive: {
     width: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
+  },
+  tableFooter: {
+    textAlign: "left"
   }
 });
 

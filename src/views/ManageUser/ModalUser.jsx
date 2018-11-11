@@ -20,7 +20,7 @@ const styles = theme => ({
   }
 });
 
-class ModalUpdateUser extends React.Component {
+class ModalUser extends React.Component {
   render() {
     const {
       data,
@@ -127,7 +127,7 @@ class ModalUpdateUser extends React.Component {
   }
 }
 
-ModalUpdateUser.propTypes = {
+ModalUser.propTypes = {
   classes: PropTypes.object,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
@@ -139,4 +139,4 @@ ModalUpdateUser.propTypes = {
   size: PropTypes.oneOf(["sm", "lg", "md"])
 };
 
-export default withStyles(styles)(ModalUpdateUser);
+export default withStyles(styles)(ModalUser);
