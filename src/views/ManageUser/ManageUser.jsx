@@ -14,6 +14,8 @@ import SearchField from "../../components/Action/Search.jsx";
 import RegularButton from "../../components/CustomButtons/Button";
 import ModalUser from "./ModalUser";
 import Icon from "@material-ui/core/Icon";
+import { Page } from "../../variables/Page";
+import { Utility } from "../../functions/Utility";
 
 class ManageUser extends React.Component {
   constructor(props) {
@@ -28,8 +30,7 @@ class ManageUser extends React.Component {
         deposit: ""
       },
       showCreateModal: false,
-      page: 0,
-
+      page: { ...Page },
       isUpdate: true // for determine need re-render or not
     };
   }
@@ -45,28 +46,11 @@ class ManageUser extends React.Component {
     return true;
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    var users = this.getCopyUsers();
-    var user = { ...this.state.user };
-    //console.log(user);
-    if (this.state.user.id > 0) {
-      //console.log(users);
-      let _users = this.updateUsers(users, user);
-      this.postDataUser(_users);
-    } else {
-      user.id = users[users.length - 1].id + 1;
-      users.push(user);
-      this.postDataUser(users);
-    }
-    this.fetchDataUser(); //update state.isUpdate for force re-render
-  };
-
   openModal = data => {
     this.setState({ user: { ...data } });
   };
 
-  closeModal = () => {
+  clearData = () => {
     this.setState({
       user: {
         id: 0,
@@ -78,21 +62,27 @@ class ManageUser extends React.Component {
     });
   };
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
   showCreateModal = () => {
     this.setState({ showCreateModal: true });
   };
 
-  successCreateModal = () => {
+  closeCreateModal = () => {
     this.setState({ showCreateModal: false });
   };
 
-  closeCreateModal = () => {
-    this.setState({ showCreateModal: false });
-    this.closeModal();
+  handleSubmit = event => {
+    event.preventDefault();
+    var users = this.getCopyUsers();
+    var user = { ...this.state.user };
+    //console.log(user);
+    if (this.state.user.id > 0) {
+      //console.log(users);
+      this.updateUsers(user);
+    } else {
+      user.id = users[users.length - 1].id + 1;
+      this.postDataUser(user);
+    }
+    this.fetchDataUser(); //update state.isUpdate for force re-render
   };
   //handleChange for modal in child.
   handleChange = (index, event) => {
@@ -108,7 +98,24 @@ class ManageUser extends React.Component {
     console.log(this.state.user);
   };
 
-  postDataUser = users => {
+  handleChangePage = data => {
+    console.log(data);
+    this.setState(
+      prevState => ({
+        page: {
+          ...prevState.page,
+          activePage: data.selected
+        }
+      }),
+      () => {
+        this.fetchDataUser();
+      }
+    );
+  };
+
+  postDataUser = user => {
+    let users = JSON.parse(localStorage.getItem("Users"));
+    users.push(user);
     localStorage.setItem("Users", JSON.stringify(users));
   };
 
@@ -119,25 +126,40 @@ class ManageUser extends React.Component {
   };
 
   fetchDataUser() {
-    let users = JSON.parse(localStorage.getItem("Users"));
+    //console.log(this.state.page);
+    let users = JSON.parse(localStorage.getItem("Users")) || [];
+    let pageCount = Utility.getCountPage(users.length, this.state.page.size);
+    let count = users.length;
+    let newUsers = Utility.getDataByPage(
+      users,
+      this.state.page.activePage,
+      this.state.page.size
+    );
 
-    this.setState({ users, isUpdate: true });
+    this.setState(prevState => ({
+      users: newUsers,
+      isUpdate: true,
+      page: {
+        ...prevState.page,
+        pageCount: pageCount,
+        count: count
+      }
+    }));
   }
 
   getCopyUsers() {
     return this.state.users.slice();
   }
 
-  updateUsers(users, newUser) {
-    //console.log(users);
+  updateUsers(newUser) {
+    let users = JSON.parse(localStorage.getItem("Users"));
     let newUsers = users.map(x => {
       if (x.id === newUser.id) {
         x = { ...newUser };
       }
       return x;
     });
-
-    return newUsers;
+    localStorage.setItem("Users", JSON.stringify(newUsers));
   }
 
   render() {
@@ -150,7 +172,6 @@ class ManageUser extends React.Component {
       <ModalUser
         open={this.state.showCreateModal}
         handleClose={this.closeCreateModal}
-        handleSuccess={this.successCreateModal}
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
         data={this.state.user}
@@ -165,7 +186,7 @@ class ManageUser extends React.Component {
         handleChange={this.handleChange}
         handleDelete={this.deleteDataUser}
         openModal={this.openModal}
-        closeModal={this.closeModal}
+        closeModal={this.clearData}
       />
     );
     const wrapperAdd = {
@@ -204,6 +225,7 @@ class ManageUser extends React.Component {
                 tableData={users}
                 cellAction={cellAction}
                 handleChangePage={this.handleChangePage}
+                page={this.state.page}
               />
             </CardBody>
           </Card>

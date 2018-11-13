@@ -7,11 +7,9 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ManagePromo from "views/ManagePromo/ManagePromo.jsx";
 import ManageUser from "views/ManageUser/ManageUser.jsx";
+//import ManageUserContainer from "../containers/ManageUserContainer";
 import ManageSupplier from "views/ManageSupplier/ManageSupplier.jsx";
 import HistoryTransaction from "views/HistoryTransaction/HistoryTransaction.jsx";
-
-
-
 
 const dashboardRoutes = [
   {
@@ -49,8 +47,8 @@ const dashboardRoutes = [
     icon: LibraryBooks,
     component: HistoryTransaction
   },
-  
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+
+  { redirect: true, path: "/", to: "/manage-user", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

@@ -26,7 +26,6 @@ class ModalUser extends React.Component {
       data,
       open,
       handleClose,
-      handleSuccess,
       handleSubmit,
       handleChange,
       title,
@@ -110,13 +109,7 @@ class ModalUser extends React.Component {
               <RegularButton onClick={handleClose} color="danger" size="sm">
                 CANCEL
               </RegularButton>
-              <RegularButton
-                onClick={handleSuccess}
-                color="success"
-                size="sm"
-                autoFocus
-                type="submit"
-              >
+              <RegularButton color="success" size="sm" autoFocus type="submit">
                 OK
               </RegularButton>
             </DialogActions>
@@ -131,7 +124,6 @@ ModalUser.propTypes = {
   classes: PropTypes.object,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleSuccess: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,

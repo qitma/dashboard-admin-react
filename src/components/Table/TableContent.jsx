@@ -17,7 +17,7 @@ function TableContent({ ...props }) {
   return (
     <TableRow key={data[`id`]}>
       <TableCell className={classes.tableCell} key={keyNo}>
-        {dataid + 1}
+        {dataid}
       </TableCell>
       {newData.map((key, index) => {
         if (key.toLowerCase() !== "id") {

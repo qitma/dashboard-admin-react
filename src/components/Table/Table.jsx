@@ -7,12 +7,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableFooter from "@material-ui/core/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination";
+import ReactPaginate from "react-paginate";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import TableContent from "./TableContent.jsx";
-import TablePaginationActions from "./TablePaginationAction";
+//import TablePaginationActions from "./TablePaginationAction";
+
 const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
@@ -21,9 +21,9 @@ const actionsStyles = theme => ({
   }
 });
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, {
-  withTheme: true
-})(TablePaginationActions);
+// const TablePaginationActionsWrapped = withStyles(actionsStyles, {
+//   withTheme: true
+// })(TablePaginationActions);
 
 function CustomTable({ ...props }) {
   const inlineStyle = {
@@ -36,10 +36,12 @@ function CustomTable({ ...props }) {
     tableHeaderColor,
     tableKey,
     cellAction,
-    handleChangePage
+    handleChangePage,
+    page
   } = props;
   const keyNo = 1;
-  const colSpanFooter = tableHead.length + 1;
+  //const pageDisplay = page.count/page.size
+  //const colSpanFooter = tableHead.length + 1;
   return (
     <div className={classes.tableResponsive} style={inlineStyle}>
       <Table className={classes.table}>
@@ -67,20 +69,20 @@ function CustomTable({ ...props }) {
         ) : null}
         <TableBody>
           {tableData.map((data, key) => {
-            // eslint-disable-next-line no-console
-            //console.log(prop);
+            // eslint-disable-next-line prettier/prettier
+            let index = ( page.activePage * page.size )+key+1;
             return (
               <TableContent
                 tableKey={tableKey}
                 data={data}
-                dataid={key}
+                dataid={index}
                 cellAction={cellAction}
                 key={data[`id`]}
               />
             );
           })}
         </TableBody>
-        <TableFooter className={classes.tableFooter}>
+        {/* <TableFooter className={classes.tableFooter}>
           <TableRow>
             <TablePagination
               colSpan={colSpanFooter}
@@ -92,8 +94,23 @@ function CustomTable({ ...props }) {
               ActionsComponent={TablePaginationActionsWrapped}
             />
           </TableRow>
-        </TableFooter>
+        </TableFooter> */}
       </Table>
+      <div className="pagination-wrapper">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={page.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handleChangePage}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      </div>
       {/* <div>
         <pre>{JSON.stringify(tableData)}</pre>
       </div> */}
@@ -124,7 +141,13 @@ CustomTable.propTypes = {
   ).isRequired,
   tableKey: PropTypes.arrayOf(PropTypes.string),
   cellAction: PropTypes.object,
-  handleChangePage: PropTypes.func
+  handleChangePage: PropTypes.func,
+  page: PropTypes.shape({
+    activePage: PropTypes.number,
+    size: PropTypes.number,
+    count: PropTypes.number,
+    pageCount: PropTypes.number
+  })
 };
 
 export default withStyles(tableStyle)(CustomTable);
