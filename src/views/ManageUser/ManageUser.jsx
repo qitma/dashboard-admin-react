@@ -10,7 +10,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 //custom
 import UserActions from "./UserActions.jsx";
-import SearchField from "../../components/Action/Search.jsx";
+import SearchField from "../../components/Search/Search.jsx";
 import RegularButton from "../../components/CustomButtons/Button";
 import ModalUser from "./ModalUser";
 import Icon from "@material-ui/core/Icon";

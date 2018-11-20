@@ -7,10 +7,11 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ManagePromo from "views/ManagePromo/ManagePromo.jsx";
 import ManageUser from "views/ManageUser/ManageUser.jsx";
+import ManagePromoUser from "views/ManagePromoUser/ManagePromoUser.jsx";
 //import ManageUserContainer from "../containers/ManageUserContainer";
 import ManageSupplier from "views/ManageSupplier/ManageSupplier.jsx";
-import HistoryTransaction from "views/HistoryTransaction/HistoryTransaction.jsx";
-
+//import HistoryTransaction from "views/HistoryTransaction/HistoryTransaction.jsx";
+import HistoryTransactionList from "../containers/HistoryTransactionListContainer.jsx";
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -34,6 +35,13 @@ const dashboardRoutes = [
     component: ManagePromo
   },
   {
+    path: "/manage-promo-user",
+    sidebarName: "Manage Promo User",
+    navbarName: "Manage Promo User",
+    icon: "content_paste",
+    component: ManagePromoUser
+  },
+  {
     path: "/manage-supplier",
     sidebarName: "Manage Supplier",
     navbarName: "Manage Supplier",
@@ -45,7 +53,7 @@ const dashboardRoutes = [
     sidebarName: "History Transaction",
     navbarName: "History Transaction",
     icon: LibraryBooks,
-    component: HistoryTransaction
+    component: HistoryTransactionList
   },
 
   { redirect: true, path: "/", to: "/manage-user", navbarName: "Redirect" }

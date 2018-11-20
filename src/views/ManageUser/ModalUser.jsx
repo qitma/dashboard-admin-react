@@ -90,7 +90,7 @@ class ModalUser extends React.Component {
                 onChange={e => handleChange(data.id, e)}
                 fullWidth
               />
-              <TextField
+              {/* <TextField
                 id="standard-deposit"
                 label="Deposit"
                 name="deposit"
@@ -103,7 +103,7 @@ class ModalUser extends React.Component {
                 }}
                 onChange={e => handleChange(data.id, e)}
                 fullWidth
-              />
+              /> */}
             </DialogContent>
             <DialogActions>
               <RegularButton onClick={handleClose} color="danger" size="sm">

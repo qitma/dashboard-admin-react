@@ -1,6 +1,14 @@
 import { combineReducers } from "redux";
-import users from "./userReducer";
+import HistoryTransactionReducer from "./reducer_historyTransaction";
+import SupplierReducer from "./reducer_supplier";
+import PromoUserReducer from "./reducer_promoUser";
+//import users from "./userReducer";
 
-export default combineReducers({
-  users: users
+const rootReducer = combineReducers({
+  historyTransactions: HistoryTransactionReducer,
+  suppliers: SupplierReducer,
+  promoUsers: PromoUserReducer
+  //users: users
 });
+
+export default rootReducer;

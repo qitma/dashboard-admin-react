@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -39,26 +40,48 @@ const styles = {
   }
 };
 
-function HistoryTransaction(props) {
-  const tableHead = ["Name", "Type Transaction", "Number Transaction", "Amount","Date","Status"];
-  const tableData = [["Qitma", "PLN", "232323123123", "40000","27-10-2018","Success"]]
-  
+const SupplierList = ({ supplierList }) => {
   //const { classes } = props;
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={tableHead}
-              tableData={tableData}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
-}
 
-export default withStyles(styles)(HistoryTransaction);
+  const tableHead = ["Supplier Name", "Product Name", "Product Type"];
+  const { suppliers, page, loading, error } = supplierList;
+  if (loading)
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
+  else if (error)
+    return (
+      <div>
+        <h3>Error : {error.message}</h3>
+      </div>
+    );
+  // eslint-disable-next-line no-console
+  return (
+    <div>
+      {suppliers && (
+        <Table
+          tableHeaderColor="primary"
+          tableHead={tableHead}
+          tableData={suppliers}
+          page={page}
+        />
+      )}
+    </div>
+  );
+};
+
+SupplierList.propTypes = {
+  supplierList: PropTypes.shape({
+    page: PropTypes.object,
+    loading: PropTypes.bool,
+    error: PropTypes.object,
+    suppliers: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number
+      })
+    )
+  })
+};
+export default withStyles(styles)(SupplierList);

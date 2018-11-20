@@ -4,11 +4,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
 import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import SupplierListContainer from "../../containers/SupplierListContainer";
+import PromoUserListContainer from "../../containers/PromoUserListContainer";
 
 const styles = {
   cardCategoryWhite: {
@@ -40,14 +38,14 @@ const styles = {
   }
 };
 
-function ManageSupplier(props) {
+function ManagePromoUser(props) {
   const { classes } = props;
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardBody>
-            <SupplierListContainer />
+            <PromoUserListContainer />
           </CardBody>
         </Card>
       </GridItem>
@@ -55,4 +53,4 @@ function ManageSupplier(props) {
   );
 }
 
-export default withStyles(styles)(ManageSupplier);
+export default withStyles(styles)(ManagePromoUser);
