@@ -37,11 +37,24 @@ const styles = {
   }
 };
 
-const SupplierList = ({ supplierList, handleChangePage }) => {
+const PromoGroupList = ({ promoGroupList, handleChangePage }) => {
   //const { classes } = props;
 
-  const tableHead = ["Supplier Name", "Product Name", "Product Type"];
-  const { suppliers, page, loading, error } = supplierList;
+  const tableHead = [
+    "Name",
+    "Mark up",
+    "Min.Deposit",
+    "Min.Transaction",
+    "Min.Transfer"
+  ];
+  const tableKey = [
+    "name",
+    "markup",
+    "minimumDeposit",
+    "minimumTransaction",
+    "minimumTransfer"
+  ];
+  const { promoGroups, page, loading, error } = promoGroupList;
   const pageComponent = (
     <div className="pagination-wrapper">
       <Pagination page={page} handleChangePage={handleChangePage} />
@@ -64,11 +77,12 @@ const SupplierList = ({ supplierList, handleChangePage }) => {
   // eslint-disable-next-line no-console
   return (
     <div>
-      {suppliers && (
+      {promoGroups && (
         <Table
           tableHeaderColor="primary"
           tableHead={tableHead}
-          tableData={suppliers}
+          tableData={promoGroups}
+          tableKey={tableKey}
           page={page}
         />
       )}
@@ -77,16 +91,16 @@ const SupplierList = ({ supplierList, handleChangePage }) => {
   );
 };
 
-SupplierList.propTypes = {
-  supplierList: PropTypes.shape({
+PromoGroupList.propTypes = {
+  promoGroupList: PropTypes.shape({
     page: PropTypes.object,
     loading: PropTypes.bool,
     error: PropTypes.object,
-    suppliers: PropTypes.arrayOf(
+    promoGroups: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number
       })
     )
   })
 };
-export default withStyles(styles)(SupplierList);
+export default withStyles(styles)(PromoGroupList);

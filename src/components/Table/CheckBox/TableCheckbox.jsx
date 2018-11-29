@@ -8,10 +8,11 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import CustomCheckBox from "./CheckBox";
-import ReactPaginate from "react-paginate";
+//import ReactPaginate from "react-paginate";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import TableContent from "./TableContentCheckbox.jsx";
+import Page from "../../../variables/Page";
 //import TablePaginationActions from "./TablePaginationAction";
 
 const actionsStyles = theme => ({
@@ -81,7 +82,7 @@ function CustomTableCheckbox({ ...props }) {
         <TableBody>
           {tableData.map((data, key) => {
             // eslint-disable-next-line prettier/prettier
-            let index = ( page.activePage * page.size )+key+1;
+            let index = ( page.page * page.size )+key+1;
             return (
               <TableContent
                 tableKey={tableKey}
@@ -108,21 +109,7 @@ function CustomTableCheckbox({ ...props }) {
           </TableRow>
         </TableFooter> */}
       </Table>
-      <div className="pagination-wrapper">
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={page.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handleChangePage}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
-      </div>
+
       {/* <div>
         <pre>{JSON.stringify(tableData)}</pre>
       </div> */}
@@ -131,7 +118,8 @@ function CustomTableCheckbox({ ...props }) {
 }
 
 CustomTableCheckbox.defaultProps = {
-  tableHeaderColor: "gray"
+  tableHeaderColor: "gray",
+  page: Page
 };
 
 CustomTableCheckbox.propTypes = {
@@ -158,7 +146,7 @@ CustomTableCheckbox.propTypes = {
   handleAllChecked: PropTypes.func.isRequired,
   isSelectedAll: PropTypes.bool,
   page: PropTypes.shape({
-    activePage: PropTypes.number,
+    page: PropTypes.number,
     size: PropTypes.number,
     count: PropTypes.number,
     pageCount: PropTypes.number

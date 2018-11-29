@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
+
 import Table from "components/Table/CheckBox/TableCheckbox.jsx";
-import Card from "components/Card/Card.jsx";
+import { Pagination } from "components/Table/Pagination.jsx";
+
 //import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
 
 const styles = {
   cardCategoryWhite: {
@@ -43,7 +42,8 @@ const styles = {
 const PromoUserList = ({
   promoUserList,
   updateSelectedPromoUser,
-  updateAllPromoUser
+  updateAllPromoUser,
+  handleChangePage
 }) => {
   //const { classes } = props;
   //console.log(updateAllPromoUser);
@@ -55,32 +55,43 @@ const PromoUserList = ({
     "Recomendation Group"
   ];
   const { promoUsers, page, loading, error, isSelectedAll } = promoUserList;
+  const pageComponent = (
+    <div className="pagination-wrapper">
+      <Pagination page={page} handleChangePage={handleChangePage} />
+    </div>
+  );
   if (loading)
     return (
       <div>
         <h1>Loading...</h1>
+        {pageComponent}
       </div>
     );
   else if (error)
     return (
       <div>
         <h3>Error : {error.message}</h3>
+        {pageComponent}
       </div>
     );
   // eslint-disable-next-line no-console
+  console.log(promoUserList);
   return (
     <div>
-      {promoUsers && (
-        <Table
-          tableHeaderColor="primary"
-          tableHead={tableHead}
-          tableData={promoUsers}
-          page={page}
-          isSelectedAll={isSelectedAll}
-          handleChecked={updateSelectedPromoUser}
-          handleAllChecked={updateAllPromoUser}
-        />
-      )}
+      {promoUsers &&
+        page && (
+          <Table
+            tableHeaderColor="primary"
+            tableHead={tableHead}
+            tableData={promoUsers}
+            page={page}
+            isSelectedAll={isSelectedAll}
+            handleChecked={updateSelectedPromoUser}
+            handleAllChecked={updateAllPromoUser}
+            handleChangePage={handleChangePage}
+          />
+        )}
+      {page && pageComponent}
     </div>
   );
 };
@@ -99,6 +110,7 @@ PromoUserList.propTypes = {
     isSelectedAll: PropTypes.bool
   }),
   updateSelectedPromoUser: PropTypes.func,
-  updateAllPromoUser: PropTypes.func
+  updateAllPromoUser: PropTypes.func,
+  handleChangePage: PropTypes.func
 };
 export default withStyles(styles)(PromoUserList);

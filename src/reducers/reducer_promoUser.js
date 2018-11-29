@@ -6,6 +6,8 @@ import {
   UPDATE_SELECTED_ALL_PROMO_USER
 } from "../actions/promoUser";
 
+import { Utility } from "../functions/Utility";
+
 const INITIAL_STATE_PROMO_USER = {
   promoUserList: {
     promoUsers: [],
@@ -34,17 +36,20 @@ const reducerPromoUser = (state = INITIAL_STATE_PROMO_USER, action) => {
           isSelectedAll: false
         }
       };
-    case FETCH_PROMO_USER_SUCCESS:
+    case FETCH_PROMO_USER_SUCCESS: {
+      let page = action.payload.page;
+      page.pageCount = Utility.getCountPage(page.count, page.size);
       return {
         ...state,
         promoUserList: {
           promoUsers: action.payload.data,
           error: null,
           loading: false,
-          page: action.payload.page,
+          page: page,
           isSelectedAll: action.payload.isSelectedAll
         }
       };
+    }
     case FETCH_PROMO_USER_FAILURE:
       error = action.payload || { message: action.payload.message };
       return {

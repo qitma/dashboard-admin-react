@@ -1,39 +1,39 @@
 import {
-  FETCH_SUPPLIER,
-  FETCH_SUPPLIER_SUCCESS,
-  FETCH_SUPPLIER_FAILURE
-} from "../actions/supplier";
+  FETCH_PROMO_GROUP,
+  FETCH_PROMO_GROUP_SUCCESS,
+  FETCH_PROMO_GROUP_FAILURE
+} from "../actions/promoGroup";
 import { Utility } from "../functions/Utility";
 
-const INITIAL_STATE_SUPPLIER = {
-  supplierList: {
-    suppliers: [],
+const INITIAL_STATE_PROMO_GROUP = {
+  promoGroupList: {
+    promoGroups: [],
     error: null,
     loading: false,
     page: {}
   }
 };
 
-const reducerSupplier = (state = INITIAL_STATE_SUPPLIER, action) => {
+const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
   let error;
   switch (action.type) {
-    case FETCH_SUPPLIER:
+    case FETCH_PROMO_GROUP:
       return {
         ...state,
-        supplierList: {
-          suppliers: [],
+        promoGroupList: {
+          promoGroups: [],
           error: null,
           loading: true,
           page: null
         }
       };
-    case FETCH_SUPPLIER_SUCCESS: {
+    case FETCH_PROMO_GROUP_SUCCESS: {
       let page = action.payload.page;
       page.pageCount = Utility.getCountPage(page.count, page.size);
       return {
         ...state,
-        supplierList: {
-          suppliers: action.payload.data,
+        promoGroupList: {
+          promoGroups: action.payload.data,
           error: null,
           loading: false,
           page: action.payload.page
@@ -41,12 +41,12 @@ const reducerSupplier = (state = INITIAL_STATE_SUPPLIER, action) => {
       };
     }
 
-    case FETCH_SUPPLIER_FAILURE:
+    case FETCH_PROMO_GROUP_FAILURE:
       error = action.payload || { message: action.payload.message };
       return {
         ...state,
-        supplierList: {
-          suppliers: [],
+        promoGroupList: {
+          promoGroups: [],
           error: error,
           loading: false,
           page: null
@@ -57,4 +57,4 @@ const reducerSupplier = (state = INITIAL_STATE_SUPPLIER, action) => {
   }
 };
 
-export default reducerSupplier;
+export default reducerPromoGroup;

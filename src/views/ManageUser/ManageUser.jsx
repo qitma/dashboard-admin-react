@@ -104,7 +104,7 @@ class ManageUser extends React.Component {
       prevState => ({
         page: {
           ...prevState.page,
-          activePage: data.selected
+          page: data.selected
         }
       }),
       () => {
@@ -132,7 +132,7 @@ class ManageUser extends React.Component {
     let count = users.length;
     let newUsers = Utility.getDataByPage(
       users,
-      this.state.page.activePage,
+      this.state.page.page,
       this.state.page.size
     );
 

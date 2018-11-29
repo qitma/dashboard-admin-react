@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  fetchPromoUsers,
-  updateAllSelectedPromoUser,
-  updateSelectedPromoUser
-} from "../actions/promoUser";
-import PromoUserList from "../views/ManagePromoUser/PromoUserList";
+import { fetchPromoGroups } from "../actions/promoGroup";
+import PromoGroupList from "../views/ManagePromoGroup/PromoGroupList";
 import { Page } from "../variables/Page";
 import { connect } from "react-redux";
 
-class PromoUserListContainer extends React.Component {
+class PromoGroupListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +15,7 @@ class PromoUserListContainer extends React.Component {
   }
   componentDidMount() {
     // eslint-disable-next-line react/prop-types
-    this.props.fetchPromoUsers(this.state.page);
+    this.props.fetchPromoGroups(this.state.page);
   }
 
   setPage = page => {
@@ -37,36 +33,32 @@ class PromoUserListContainer extends React.Component {
         }
       }),
       () => {
-        this.props.fetchPromoUsers(this.state.page);
+        this.props.fetchPromoGroups(this.state.page);
       }
     );
   };
 
   render() {
-    //console.log(this.props);
     return (
-      <PromoUserList {...this.props} handleChangePage={this.handleChangePage} />
+      <PromoGroupList
+        {...this.props}
+        handleChangePage={this.handleChangePage}
+      />
     );
   }
 }
 
 const mapStateToProps = state => {
-  //console.log(state);
+  console.log(state);
   return {
-    promoUserList: state.promoUsers.promoUserList
+    promoGroupList: state.promoGroups.promoGroupList
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPromoUsers: Page => {
-      dispatch(fetchPromoUsers(Page));
-    },
-    updateSelectedPromoUser: id => {
-      dispatch(updateSelectedPromoUser(id));
-    },
-    updateAllPromoUser: () => {
-      dispatch(updateAllSelectedPromoUser());
+    fetchPromoGroups: page => {
+      dispatch(fetchPromoGroups(page));
     }
   };
 };
@@ -74,4 +66,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PromoUserListContainer);
+)(PromoGroupListContainer);

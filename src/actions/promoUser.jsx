@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Utility } from "../functions/Utility";
 const BASE_URL = "http://localhost:3000/api";
 
 //promoUser transaction list
@@ -8,21 +9,21 @@ export const FETCH_PROMO_USER_FAILURE = "FETCH_PROMO_USER_FAILURE";
 export const UPDATE_SELECTED_PROMO_USER = "UPDATE_SELECTED_PROMO_USER";
 export const UPDATE_SELECTED_ALL_PROMO_USER = "UPDATE_SELECTED_ALL_PROMO_USER";
 
-function fakeFetchPromoUsers() {
+function fakeFetchPromoUsers(page) {
   const request = JSON.parse(localStorage.getItem("PromoUsers"));
-  const page = {
-    activePage: 0,
-    size: 5,
-    count: request.length,
-    pageCount: 0
-  };
+  //for emulate paging, remove this when using real api
+  console.log(
+    "emulate paging at promoUser action-- Remove this when using real api"
+  );
+  console.log(page);
+  let newData = Utility.getDataByPage(request, page.page, page.size);
   const response = {
-    data: request,
-    page: { ...page }
+    data: newData,
+    page: { ...page, count: request.length }
   };
 
   return new Promise(resolve => {
-    setTimeout(() => resolve(response), 2000);
+    setTimeout(() => resolve(response), 1000);
   });
 }
 
@@ -41,7 +42,7 @@ function addSelectedProperty(data) {
   return { ...data, data: newObj, isSelectedAll: false };
 }
 
-export function fetchPromoUsers() {
+export function fetchPromoUsers(page) {
   //api version
   // const request = axios({
   //   method: "get",
@@ -51,7 +52,7 @@ export function fetchPromoUsers() {
   //localStorage version
   return dispatch => {
     dispatch(fetchPromoUserStart());
-    return fakeFetchPromoUsers()
+    return fakeFetchPromoUsers(page)
       .then(response => {
         dispatch(fetchPromoUserSuccess(addSelectedProperty(response)));
       })

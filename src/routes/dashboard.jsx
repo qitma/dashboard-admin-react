@@ -5,7 +5,7 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import ManagePromo from "views/ManagePromo/ManagePromo.jsx";
+import ManagePromoGroup from "views/ManagePromoGroup/ManagePromoGroup.jsx";
 import ManageUser from "views/ManageUser/ManageUser.jsx";
 import ManagePromoUser from "views/ManagePromoUser/ManagePromoUser.jsx";
 //import ManageUserContainer from "../containers/ManageUserContainer";
@@ -32,7 +32,7 @@ const dashboardRoutes = [
     sidebarName: "Manage Promo",
     navbarName: "Manage Promo",
     icon: "content_paste",
-    component: ManagePromo
+    component: ManagePromoGroup
   },
   {
     path: "/manage-promo-user",

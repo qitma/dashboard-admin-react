@@ -22,6 +22,60 @@ const dummySuppliers = [
     name: "bayu",
     productName: "XL",
     productType: "PULSA"
+  },
+  {
+    id: 4,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 5,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 6,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 7,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 8,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 9,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 10,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 11,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
+  },
+  {
+    id: 12,
+    name: "ryan",
+    productName: "SIMPATI",
+    productType: "PULSA"
   }
 ];
 

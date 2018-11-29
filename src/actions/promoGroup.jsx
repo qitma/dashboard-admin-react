@@ -3,12 +3,12 @@ import { Utility } from "../functions/Utility";
 const BASE_URL = "http://localhost:3000/api";
 
 //supplier transaction list
-export const FETCH_SUPPLIER = "FETCH_SUPPLIER";
-export const FETCH_SUPPLIER_SUCCESS = "FETCH_SUPPLIER_SUCCESS";
-export const FETCH_SUPPLIER_FAILURE = "FETCH_SUPPLIER_FAILURE";
+export const FETCH_PROMO_GROUP = "FETCH_PROMO_GROUP";
+export const FETCH_PROMO_GROUP_SUCCESS = "FETCH_PROMO_GROUP_SUCCESS";
+export const FETCH_PROMO_GROUP_FAILURE = "FETCH_PROMO_GROUP_FAILURE";
 
-function fakeFetchSuppliers(page) {
-  const request = JSON.parse(localStorage.getItem("Suppliers"));
+function fakeFetchPromoGroups(page) {
+  const request = JSON.parse(localStorage.getItem("PromoGroups"));
   let newData = Utility.getDataByPage(request, page.page, page.size);
   const response = {
     data: newData,
@@ -20,7 +20,7 @@ function fakeFetchSuppliers(page) {
   });
 }
 
-export function fetchSuppliers(page) {
+export function fetchPromoGroups(page) {
   //api version
   // const request = axios({
   //   method: "get",
@@ -29,34 +29,34 @@ export function fetchSuppliers(page) {
   // });
   //localStorage version
   return dispatch => {
-    dispatch(fetchSupplierStart());
+    dispatch(fetchPromoGroupStart());
 
-    return fakeFetchSuppliers(page)
+    return fakeFetchPromoGroups(page)
       .then(response => {
-        dispatch(fetchSupplierSuccess(response));
+        dispatch(fetchPromoGroupSuccess(response));
       })
       .catch(error => {
-        dispatch(fetchSupplierFailure(error));
+        dispatch(fetchPromoGroupFailure(error));
       });
   };
 }
 
-const fetchSupplierStart = () => {
+const fetchPromoGroupStart = () => {
   return {
-    type: FETCH_SUPPLIER
+    type: FETCH_PROMO_GROUP
   };
 };
 
-const fetchSupplierSuccess = supplier => {
+const fetchPromoGroupSuccess = supplier => {
   return {
-    type: FETCH_SUPPLIER_SUCCESS,
+    type: FETCH_PROMO_GROUP_SUCCESS,
     payload: supplier
   };
 };
 
-const fetchSupplierFailure = error => {
+const fetchPromoGroupFailure = error => {
   return {
-    type: FETCH_SUPPLIER_FAILURE,
+    type: FETCH_PROMO_GROUP_FAILURE,
     payload: error
   };
 };
