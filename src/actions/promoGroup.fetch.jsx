@@ -2,7 +2,7 @@ import axios from "axios";
 import { Utility } from "../functions/Utility";
 const BASE_URL = "http://localhost:3000/api";
 
-//supplier transaction list
+//promoGroup transaction list
 export const FETCH_PROMO_GROUP = "FETCH_PROMO_GROUP";
 export const FETCH_PROMO_GROUP_SUCCESS = "FETCH_PROMO_GROUP_SUCCESS";
 export const FETCH_PROMO_GROUP_FAILURE = "FETCH_PROMO_GROUP_FAILURE";
@@ -24,7 +24,7 @@ export function fetchPromoGroups(page) {
   //api version
   // const request = axios({
   //   method: "get",
-  //   url: `${BASE_URL}/supplier-transaction`,
+  //   url: `${BASE_URL}/promoGroup-transaction`,
   //   headers: ""
   // });
   //localStorage version
@@ -47,10 +47,10 @@ const fetchPromoGroupStart = () => {
   };
 };
 
-const fetchPromoGroupSuccess = supplier => {
+const fetchPromoGroupSuccess = promoGroup => {
   return {
     type: FETCH_PROMO_GROUP_SUCCESS,
-    payload: supplier
+    payload: promoGroup
   };
 };
 

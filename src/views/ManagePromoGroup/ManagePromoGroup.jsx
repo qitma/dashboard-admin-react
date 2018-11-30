@@ -7,6 +7,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import PromoGroupListContainer from "../../containers/PromoGroupListContainer";
+import PromoGroupCreateContainer from "../../containers/PromoGroupCreateContainer";
 
 const styles = {
   cardCategoryWhite: {
@@ -45,6 +46,7 @@ function ManagePromoGroup(props) {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardBody>
+            <PromoGroupCreateContainer />
             <PromoGroupListContainer />
           </CardBody>
         </Card>

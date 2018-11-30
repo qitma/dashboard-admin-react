@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchPromoGroups } from "../actions/promoGroup";
+import { fetchPromoGroups } from "../actions/promoGroup.fetch";
 import PromoGroupList from "../views/ManagePromoGroup/PromoGroupList";
 import { Page } from "../variables/Page";
 import { connect } from "react-redux";

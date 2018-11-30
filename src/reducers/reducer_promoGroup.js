@@ -2,7 +2,12 @@ import {
   FETCH_PROMO_GROUP,
   FETCH_PROMO_GROUP_SUCCESS,
   FETCH_PROMO_GROUP_FAILURE
-} from "../actions/promoGroup";
+} from "../actions/promoGroup.fetch.jsx";
+import {
+  CREATE_PROMO_GROUP,
+  CREATE_PROMO_GROUP_SUCCESS,
+  CREATE_PROMO_GROUP_FAILURE
+} from "../actions/promoGroup.create.jsx";
 import { Utility } from "../functions/Utility";
 
 const INITIAL_STATE_PROMO_GROUP = {
@@ -11,11 +16,16 @@ const INITIAL_STATE_PROMO_GROUP = {
     error: null,
     loading: false,
     page: {}
+  },
+  newPromoGroup: {
+    promoGroup: null,
+    error: null,
+    loading: false
   }
 };
 
 const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
-  let error;
+  let error, data;
   switch (action.type) {
     case FETCH_PROMO_GROUP:
       return {
@@ -50,6 +60,37 @@ const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
           error: error,
           loading: false,
           page: null
+        }
+      };
+
+    //section post data
+    case CREATE_PROMO_GROUP:
+      return {
+        ...state,
+        newPromoGroup: {
+          promoGroup: null,
+          error: null,
+          loading: true
+        }
+      };
+    case CREATE_PROMO_GROUP_SUCCESS:
+      data = action.payload.data || action.payload;
+      return {
+        ...state,
+        newPromoGroup: {
+          promoGroup: data,
+          error: null,
+          loading: false
+        }
+      };
+    case CREATE_PROMO_GROUP_FAILURE:
+      error = action.payload || { message: action.payload.message };
+      return {
+        ...state,
+        newPromoGroup: {
+          promoGroup: null,
+          error: error,
+          loading: false
         }
       };
     default:
