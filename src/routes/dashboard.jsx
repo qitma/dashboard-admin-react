@@ -10,8 +10,7 @@ import ManageUser from "views/ManageUser/ManageUser.jsx";
 import ManagePromoUser from "views/ManagePromoUser/ManagePromoUser.jsx";
 //import ManageUserContainer from "../containers/ManageUserContainer";
 import ManageSupplier from "views/ManageSupplier/ManageSupplier.jsx";
-//import HistoryTransaction from "views/HistoryTransaction/HistoryTransaction.jsx";
-import HistoryTransactionList from "../containers/HistoryTransactionListContainer.jsx";
+import ManageHistoryTransaction from "views/HistoryTransaction/ManageHistoryTransaction";
 const dashboardRoutes = [
   // {
   //   path: "/dashboard",
@@ -49,11 +48,11 @@ const dashboardRoutes = [
     component: ManageSupplier
   },
   {
-    path: "/history-transaction",
+    path: "/manage-history-transaction",
     sidebarName: "History Transaction",
     navbarName: "History Transaction",
     icon: LibraryBooks,
-    component: HistoryTransactionList
+    component: ManageHistoryTransaction
   },
 
   { redirect: true, path: "/", to: "/manage-user", navbarName: "Redirect" }

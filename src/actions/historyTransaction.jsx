@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Utility } from "../functions/Utility";
 const BASE_URL = "http://localhost:3000/api";
 
 //history transaction list
@@ -8,17 +9,12 @@ export const FETCH_HISTORY_TRANSACTION_SUCCESS =
 export const FETCH_HISTORY_TRANSACTION_FAILURE =
   "FETCH_HISTORY_TRANSACTION_FAILURE";
 
-function fakeFetchHistoryTransactions() {
+function fakeFetchHistoryTransactions(page) {
   const request = JSON.parse(localStorage.getItem("HistoryTransactions"));
-  const page = {
-    activePage: 0,
-    size: 5,
-    count: request.length,
-    pageCount: 0
-  };
+  let newData = Utility.getDataByPage(request, page.page, page.size);
   const response = {
-    data: request,
-    page: { ...page }
+    data: newData,
+    page: { ...page, count: request.length }
   };
 
   return new Promise(resolve => {
@@ -26,7 +22,7 @@ function fakeFetchHistoryTransactions() {
   });
 }
 
-export function fetchHistoryTransactions() {
+export function fetchHistoryTransactions(page) {
   //api version
   // const request = axios({
   //   method: "get",
@@ -37,7 +33,7 @@ export function fetchHistoryTransactions() {
   return dispatch => {
     dispatch(fetchHistoryTransactionStart());
 
-    return fakeFetchHistoryTransactions()
+    return fakeFetchHistoryTransactions(page)
       .then(response => {
         dispatch(fetchHistoryTransactionSuccess(response));
       })

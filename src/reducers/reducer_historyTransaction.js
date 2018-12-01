@@ -3,6 +3,7 @@ import {
   FETCH_HISTORY_TRANSACTION_FAILURE,
   FETCH_HISTORY_TRANSACTION_SUCCESS
 } from "../actions/historyTransaction";
+import { Utility } from "../functions/Utility";
 
 const INITIAL_STATE_HISTORY_TRANSACTION = {
   historyTransactionList: {
@@ -29,7 +30,9 @@ const reducerHistoryTransaction = (
           page: null
         }
       };
-    case FETCH_HISTORY_TRANSACTION_SUCCESS:
+    case FETCH_HISTORY_TRANSACTION_SUCCESS: {
+      let page = action.payload.page;
+      page.pageCount = Utility.getCountPage(page.count, page.size);
       return {
         ...state,
         historyTransactionList: {
@@ -39,6 +42,7 @@ const reducerHistoryTransaction = (
           page: action.payload.page
         }
       };
+    }
     case FETCH_HISTORY_TRANSACTION_FAILURE:
       error = action.payload || { message: action.payload.message };
       return {
