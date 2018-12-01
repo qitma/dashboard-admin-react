@@ -11,8 +11,22 @@ class PromoGroupCreateContainer extends React.Component {
     };
   }
 
+  handleShowModal = () => {
+    this.setState({ showModalCreate: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModalCreate: false });
+  };
+
   render() {
-    return <PromoGroupCreate {...this.props} />;
+    return (
+      <PromoGroupCreate
+        {...this.props}
+        handleShowModal={this.handleShowModal}
+        handleCloseModal={this.handleCloseModal}
+      />
+    );
   }
 }
 
@@ -24,8 +38,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPromoGroups: data => {
-      dispatch(createPromoGroup(data));
+    createPromoGroup: post => {
+      dispatch(createPromoGroup(post));
     }
   };
 };

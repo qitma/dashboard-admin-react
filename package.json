@@ -1,5 +1,5 @@
 {
-  "name": "material-dashboard-react",
+  "name": "ppob-admin",
   "version": "1.5.0",
   "description": "Material Dashboard React. Coded by Creative Tim",
   "private": false,
@@ -27,6 +27,7 @@
     "react-scripts": "1.1.5",
     "react-swipeable-views": "0.12.17",
     "redux": "^4.0.1",
+    "redux-form": "^7.4.2",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

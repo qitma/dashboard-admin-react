@@ -13,13 +13,13 @@ import ManageSupplier from "views/ManageSupplier/ManageSupplier.jsx";
 //import HistoryTransaction from "views/HistoryTransaction/HistoryTransaction.jsx";
 import HistoryTransactionList from "../containers/HistoryTransactionListContainer.jsx";
 const dashboardRoutes = [
-  {
-    path: "/dashboard",
-    sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
-    icon: Dashboard,
-    component: DashboardPage
-  },
+  // {
+  //   path: "/dashboard",
+  //   sidebarName: "Dashboard",
+  //   navbarName: "Material Dashboard",
+  //   icon: Dashboard,
+  //   component: DashboardPage
+  // },
   {
     path: "/manage-user",
     sidebarName: "Manage User",
