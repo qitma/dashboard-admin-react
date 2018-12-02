@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import configureStore from "./store";
+import configureStore from "./_store";
 import { Provider } from "react-redux";
 import App from "./App.jsx";
 import "./DummyData";

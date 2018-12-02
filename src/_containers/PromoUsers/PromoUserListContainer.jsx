@@ -3,9 +3,9 @@ import {
   fetchPromoUsers,
   updateAllSelectedPromoUser,
   updateSelectedPromoUser
-} from "../actions/promoUser";
-import PromoUserList from "../views/ManagePromoUser/PromoUserList";
-import { Page } from "../variables/Page";
+} from "../../_actions/promoUser";
+import PromoUserList from "../../views/ManagePromoUser/PromoUserList";
+import { Page } from "../../variables/Page";
 import { connect } from "react-redux";
 
 class PromoUserListContainer extends React.Component {

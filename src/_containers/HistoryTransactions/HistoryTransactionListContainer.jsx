@@ -1,10 +1,10 @@
 import React from "react";
-import { fetchPromoGroups } from "../actions/promoGroup.fetch";
-import PromoGroupList from "../views/ManagePromoGroup/PromoGroupList";
-import { Page } from "../variables/Page";
 import { connect } from "react-redux";
+import { fetchHistoryTransactions } from "../../_actions/historyTransaction";
+import { Page } from "../../variables/Page";
+import HistoryTransactionList from "../../views/HistoryTransaction/HistoryTransactionList";
 
-class PromoGroupListContainer extends React.Component {
+class HistoryTransactionListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +14,7 @@ class PromoGroupListContainer extends React.Component {
     };
   }
   componentDidMount() {
-    // eslint-disable-next-line react/prop-types
-    this.props.fetchPromoGroups(this.state.page);
+    this.props.fetchHistoryTransaction(this.state.page);
   }
 
   setPage = page => {
@@ -33,14 +32,14 @@ class PromoGroupListContainer extends React.Component {
         }
       }),
       () => {
-        this.props.fetchPromoGroups(this.state.page);
+        this.props.fetchHistoryTransaction(this.state.page);
       }
     );
   };
 
   render() {
     return (
-      <PromoGroupList
+      <HistoryTransactionList
         {...this.props}
         handleChangePage={this.handleChangePage}
       />
@@ -49,16 +48,15 @@ class PromoGroupListContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
-    promoGroupList: state.promoGroups.promoGroupList
+    historyTransactionList: state.historyTransactions.historyTransactionList
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPromoGroups: page => {
-      dispatch(fetchPromoGroups(page));
+    fetchHistoryTransaction: page => {
+      dispatch(fetchHistoryTransactions(page));
     }
   };
 };
@@ -66,4 +64,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PromoGroupListContainer);
+)(HistoryTransactionListContainer);

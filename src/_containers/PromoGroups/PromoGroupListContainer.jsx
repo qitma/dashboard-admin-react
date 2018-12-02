@@ -1,10 +1,10 @@
 import React from "react";
-import { fetchSuppliers } from "../actions/supplier";
-import SupplierList from "../views/ManageSupplier/SupplierList";
-import { Page } from "../variables/Page";
+import { fetchPromoGroups } from "../../_actions/promoGroup.fetch";
+import PromoGroupList from "../../views/ManagePromoGroup/PromoGroupList";
+import { Page } from "../../variables/Page";
 import { connect } from "react-redux";
 
-class SupplierListContainer extends React.Component {
+class PromoGroupListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ class SupplierListContainer extends React.Component {
   }
   componentDidMount() {
     // eslint-disable-next-line react/prop-types
-    this.props.fetchSuppliers(this.state.page);
+    this.props.fetchPromoGroups(this.state.page);
   }
 
   setPage = page => {
@@ -33,14 +33,17 @@ class SupplierListContainer extends React.Component {
         }
       }),
       () => {
-        this.props.fetchSuppliers(this.state.page);
+        this.props.fetchPromoGroups(this.state.page);
       }
     );
   };
 
   render() {
     return (
-      <SupplierList {...this.props} handleChangePage={this.handleChangePage} />
+      <PromoGroupList
+        {...this.props}
+        handleChangePage={this.handleChangePage}
+      />
     );
   }
 }
@@ -48,14 +51,14 @@ class SupplierListContainer extends React.Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    supplierList: state.suppliers.supplierList
+    promoGroupList: state.promoGroups.promoGroupList
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSuppliers: page => {
-      dispatch(fetchSuppliers(page));
+    fetchPromoGroups: page => {
+      dispatch(fetchPromoGroups(page));
     }
   };
 };
@@ -63,4 +66,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SupplierListContainer);
+)(PromoGroupListContainer);

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { createUser } from "../actions";
+import { createUser } from "../_actions";
 import ManageUser from "../views/ManageUser/ManageUser";
 
 const mapDispatchToProps = dispatch => {

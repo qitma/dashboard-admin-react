@@ -1,10 +1,10 @@
 import React from "react";
+import { fetchSuppliers } from "../../_actions/supplier";
+import SupplierList from "../../views/ManageSupplier/SupplierList";
+import { Page } from "../../variables/Page";
 import { connect } from "react-redux";
-import { fetchHistoryTransactions } from "../actions/historyTransaction";
-import { Page } from "../variables/Page";
-import HistoryTransactionList from "../views/HistoryTransaction/HistoryTransactionList";
 
-class HistoryTransactionListContainer extends React.Component {
+class SupplierListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,8 @@ class HistoryTransactionListContainer extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.fetchHistoryTransaction(this.state.page);
+    // eslint-disable-next-line react/prop-types
+    this.props.fetchSuppliers(this.state.page);
   }
 
   setPage = page => {
@@ -32,31 +33,29 @@ class HistoryTransactionListContainer extends React.Component {
         }
       }),
       () => {
-        this.props.fetchHistoryTransaction(this.state.page);
+        this.props.fetchSuppliers(this.state.page);
       }
     );
   };
 
   render() {
     return (
-      <HistoryTransactionList
-        {...this.props}
-        handleChangePage={this.handleChangePage}
-      />
+      <SupplierList {...this.props} handleChangePage={this.handleChangePage} />
     );
   }
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
-    historyTransactionList: state.historyTransactions.historyTransactionList
+    supplierList: state.suppliers.supplierList
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchHistoryTransaction: page => {
-      dispatch(fetchHistoryTransactions(page));
+    fetchSuppliers: page => {
+      dispatch(fetchSuppliers(page));
     }
   };
 };
@@ -64,4 +63,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HistoryTransactionListContainer);
+)(SupplierListContainer);

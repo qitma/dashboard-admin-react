@@ -1,54 +1,52 @@
 import {
-  FETCH_HISTORY_TRANSACTION,
-  FETCH_HISTORY_TRANSACTION_FAILURE,
-  FETCH_HISTORY_TRANSACTION_SUCCESS
-} from "../actions/historyTransaction";
+  FETCH_SUPPLIER,
+  FETCH_SUPPLIER_SUCCESS,
+  FETCH_SUPPLIER_FAILURE
+} from "../_actions/supplier";
 import { Utility } from "../functions/Utility";
 
-const INITIAL_STATE_HISTORY_TRANSACTION = {
-  historyTransactionList: {
-    historyTransactions: [],
+const INITIAL_STATE_SUPPLIER = {
+  supplierList: {
+    suppliers: [],
     error: null,
     loading: false,
     page: {}
   }
 };
 
-const reducerHistoryTransaction = (
-  state = INITIAL_STATE_HISTORY_TRANSACTION,
-  action
-) => {
+const reducerSupplier = (state = INITIAL_STATE_SUPPLIER, action) => {
   let error;
   switch (action.type) {
-    case FETCH_HISTORY_TRANSACTION:
+    case FETCH_SUPPLIER:
       return {
         ...state,
-        historyTransactionList: {
-          historyTransactions: [],
+        supplierList: {
+          suppliers: [],
           error: null,
           loading: true,
           page: null
         }
       };
-    case FETCH_HISTORY_TRANSACTION_SUCCESS: {
+    case FETCH_SUPPLIER_SUCCESS: {
       let page = action.payload.page;
       page.pageCount = Utility.getCountPage(page.count, page.size);
       return {
         ...state,
-        historyTransactionList: {
-          historyTransactions: action.payload.data,
+        supplierList: {
+          suppliers: action.payload.data,
           error: null,
           loading: false,
           page: action.payload.page
         }
       };
     }
-    case FETCH_HISTORY_TRANSACTION_FAILURE:
+
+    case FETCH_SUPPLIER_FAILURE:
       error = action.payload || { message: action.payload.message };
       return {
         ...state,
-        historyTransactionList: {
-          historyTransactions: [],
+        supplierList: {
+          suppliers: [],
           error: error,
           loading: false,
           page: null
@@ -59,4 +57,4 @@ const reducerHistoryTransaction = (
   }
 };
 
-export default reducerHistoryTransaction;
+export default reducerSupplier;

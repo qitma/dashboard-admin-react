@@ -4,7 +4,7 @@ import {
   FETCH_PROMO_USER_FAILURE,
   UPDATE_SELECTED_PROMO_USER,
   UPDATE_SELECTED_ALL_PROMO_USER
-} from "../actions/promoUser";
+} from "../_actions/promoUser";
 
 import { Utility } from "../functions/Utility";
 

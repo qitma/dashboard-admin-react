@@ -2,12 +2,12 @@ import {
   FETCH_PROMO_GROUP,
   FETCH_PROMO_GROUP_SUCCESS,
   FETCH_PROMO_GROUP_FAILURE
-} from "../actions/promoGroup.fetch.jsx";
+} from "../_actions/promoGroup.fetch.jsx";
 import {
   CREATE_PROMO_GROUP,
   CREATE_PROMO_GROUP_SUCCESS,
   CREATE_PROMO_GROUP_FAILURE
-} from "../actions/promoGroup.create.jsx";
+} from "../_actions/promoGroup.create.jsx";
 import { Utility } from "../functions/Utility";
 
 const INITIAL_STATE_PROMO_GROUP = {
@@ -18,7 +18,15 @@ const INITIAL_STATE_PROMO_GROUP = {
     page: {}
   },
   newPromoGroup: {
-    promoGroup: null,
+    promoGroup: {
+      id: 0,
+      groupName: "",
+      markup: 0,
+      minimumDeposit: 0,
+      minimumTransaction: 0,
+      minimumTransfer: 0,
+      description: ""
+    },
     error: null,
     loading: false
   }
@@ -68,7 +76,15 @@ const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
       return {
         ...state,
         newPromoGroup: {
-          promoGroup: null,
+          promoGroup: {
+            id: 0,
+            groupName: "",
+            markup: 0,
+            minimumDeposit: 0,
+            minimumTransaction: 0,
+            minimumTransfer: 0,
+            description: ""
+          },
           error: null,
           loading: true
         }
@@ -88,7 +104,15 @@ const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
       return {
         ...state,
         newPromoGroup: {
-          promoGroup: null,
+          promoGroup: {
+            id: 0,
+            groupName: "",
+            markup: 0,
+            minimumDeposit: 0,
+            minimumTransaction: 0,
+            minimumTransfer: 0,
+            description: ""
+          },
           error: error,
           loading: false
         }

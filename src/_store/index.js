@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import rootReducer from "../reducers";
+import rootReducer from "../_reducers";
 
 // export const store = createStore(rootReducer, applyMiddleware(thunk));
 // store.dispatch(fetchAllUsers());

@@ -6,7 +6,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import HistoryTransactionListContainer from "../../containers/HistoryTransactionListContainer";
+import HistoryTransactionListContainer from "../../_containers/HistoryTransactions/HistoryTransactionListContainer";
 
 const styles = {
   cardCategoryWhite: {

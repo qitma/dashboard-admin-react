@@ -6,8 +6,10 @@ import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import PromoGroupListContainer from "../../containers/PromoGroupListContainer";
-import PromoGroupCreateContainer from "../../containers/PromoGroupCreateContainer";
+import PromoGroupListContainer from "../../_containers/PromoGroups/PromoGroupListContainer";
+import ModalPromoGroupContainer from "../../_containers/PromoGroups/ModalPromoGroupContainer";
+import RegularButton from "../../components/CustomButtons/Button";
+import Icon from "@material-ui/core/Icon";
 
 const styles = {
   cardCategoryWhite: {
@@ -39,20 +41,47 @@ const styles = {
   }
 };
 
-function ManagePromoGroup(props) {
-  const { classes } = props;
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardBody>
-            <PromoGroupCreateContainer />
-            <PromoGroupListContainer />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
+class ManagePromoGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModalCreate: false
+    };
+  }
+  handleShowModal = () => {
+    this.setState({ showModalCreate: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModalCreate: false });
+  };
+  render() {
+    const { classes } = this.props;
+    return (
+      <GridContainer>
+        <ModalPromoGroupContainer
+          isOpen={this.state.showModalCreate}
+          handleClose={this.handleCloseModal}
+        />
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardBody>
+              <RegularButton
+                onClick={this.handleShowModal}
+                color="success"
+                size="sm"
+                autoFocus
+                style={{ fontSize: "1em", textAlign: "left" }}
+              >
+                <Icon>add</Icon> Add
+              </RegularButton>
+              <PromoGroupListContainer />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
 
 export default withStyles(styles)(ManagePromoGroup);
