@@ -18,6 +18,7 @@ function fakeCreatePromoGroups(post) {
   const response = {
     data: newData
   };
+  console.log(response);
   return new Promise(resolve => {
     setTimeout(() => resolve(response), 1000);
   });

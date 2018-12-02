@@ -20,9 +20,9 @@ const INITIAL_STATE_PROMO_GROUP = {
   newPromoGroup: {
     promoGroup: {
       id: 0,
-      groupName: "",
+      name: "",
       markup: 0,
-      minimumDeposit: 0,
+      minimumDeposit: 20,
       minimumTransaction: 0,
       minimumTransfer: 0,
       description: ""
@@ -78,7 +78,7 @@ const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
         newPromoGroup: {
           promoGroup: {
             id: 0,
-            groupName: "",
+            name: "",
             markup: 0,
             minimumDeposit: 0,
             minimumTransaction: 0,
@@ -106,7 +106,7 @@ const reducerPromoGroup = (state = INITIAL_STATE_PROMO_GROUP, action) => {
         newPromoGroup: {
           promoGroup: {
             id: 0,
-            groupName: "",
+            name: "",
             markup: 0,
             minimumDeposit: 0,
             minimumTransaction: 0,
